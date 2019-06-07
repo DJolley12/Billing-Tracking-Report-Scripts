@@ -10,10 +10,10 @@ function returnMedicObjectArray() {
   for (i = 3; i < 47; i++) { 
     
     var statusBoardColumnNumberString = i.toString();
-    var score = currentSheet.getRange("R" + statusBoardColumnNumberString).getValue().toString().trim();
+    var score = currentSheet.getRange("V" + statusBoardColumnNumberString).getValue().toString().trim();
     
-    var medic = {name: currentSheet.getRange("P" + statusBoardColumnNumberString).getValue().trim().toUpperCase(), 
-                 number: currentSheet.getRange("O" + statusBoardColumnNumberString).getValue().trim().toUpperCase(), 
+    var medic = {name: currentSheet.getRange("T" + statusBoardColumnNumberString).getValue().trim().toUpperCase(), 
+                 number: currentSheet.getRange("R" + statusBoardColumnNumberString).getValue().trim().toUpperCase(), 
                  base: currentSheet.getRange("A" + statusBoardColumnNumberString).getValue().trim().toUpperCase(),
                  checkedIn: false};
     
@@ -146,6 +146,33 @@ function returnAssetArray() {
     }
   }
   return assets;
+}
+
+function returnOutOfServiceAircraftArray() {
+  
+  var outOfServiceAircraftArray = [];
+  var aircraftTailNumbers = ["N407CH", "N210PT", "N407JM", "N253PC", "N181CG", "N407FC", "N407CP", "N407ZM", "N407TK", "N407CN", "N407LP", "N7160V", "N429CH", "N407TH", "N407LF"];
+  var oosAircraft;
+  //needs another for loop inside due to different lengths of arrays
+  for (i = 0; i < aircraftTailNumbers.length; i++) {
+    
+    for (a = 0; a < Assets.length; a++) {
+      
+      if (aircraftTailNumbers[i] === Assets[a].tailNumber) {
+        
+        oosAircraft = undefined;
+        break;
+      } 
+      
+      oosAircraft = aircraftTailNumbers[i];
+    }
+    
+    if (oosAircraft !== undefined) {
+
+      outOfServiceAircraftArray.push(oosAircraft);
+    }
+  }
+  return outOfServiceAircraftArray;
 }
 
 function returnPilotArray() {

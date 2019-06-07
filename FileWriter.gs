@@ -19,7 +19,8 @@ function writeMedicsToBillingFile() {
   billingYearFolder = billingFolder.getFoldersByName(currentYearFolderName);
   trackingFile = DriveApp.getFilesByName(trackingFileName);
   tSS = tApp.open(trackingFile.next());
-  
+  var column = returnColumnFromCurrentDayOfMonth();
+
   for (j = 0; j < Medics.length; j++) {
     
     columnOneContents = Medics[j].base;
@@ -28,7 +29,6 @@ function writeMedicsToBillingFile() {
     trackingFileRowNumberString = j.toString();
     //assignColorSchemePerBase();
     var row = getMedicRowNumber();
-    var column = returnColumnFromCurrentDayOfMonth();
 
     if (Medics[j].number.toString() === "") {
       Logger.log('empty string caught ' + j);
@@ -89,14 +89,14 @@ function writeAssetsToBillingFile() {
 
   billingYearFolder = billingFolder.getFoldersByName(currentYearFolderName);
   trackingFile = DriveApp.getFilesByName(trackingFileName);
-  tSS = tApp.open(trackingFile.next());
+  tSS = tApp.open(trackingFile.next());    
+  var column = returnColumnFromCurrentDayOfMonth();
   
   for (j = 0; j < Assets.length; j++) {
 
     columnOneContents = Assets[j].base;
     columnTwoContents = Assets[j].type;
     var row = getAssetRowNumber();
-    var column = returnColumnFromCurrentDayOfMonth();
     Logger.log(columnOneContents);
     Logger.log(columnTwoContents);
     Logger.log(row);
@@ -117,6 +117,22 @@ function writeAssetsToBillingFile() {
       //tSS.getRange("B" + trackingFileColumnNumberString).setValue(Assets[j].type);
       //tSS.getRange("A" + trackingFileColumnNumberString).setValue(Assets[j].base);
     }
+  }
+}
+
+function writeOOSAssetsToBillingFile() { 
+  
+  billingYearFolder = billingFolder.getFoldersByName(currentYearFolderName);
+  trackingFile = DriveApp.getFilesByName(trackingFileName);
+  tSS = tApp.open(trackingFile.next());
+  var rowNumber = 50;
+  var column = returnColumnFromCurrentDayOfMonth();
+  
+  for (j = 0; j < OOSAssets.length; j++) {
+    
+    var row = rowNumber.toString();
+    tSS.getRange(column + row).setValue(OOSAssets[j]);  
+    rowNumber++;  
   }
 }
 
@@ -156,14 +172,14 @@ function writePilotsToBillingFile() {
   billingYearFolder = billingFolder.getFoldersByName(currentYearFolderName);
   trackingFile = DriveApp.getFilesByName(trackingFileName);
   tSS = tApp.open(trackingFile.next());
-  
+  var column = returnColumnFromCurrentDayOfMonth();
+
   for (j = 0; j < Pilots.length; j++) {
     
     columnOneContents = Pilots[j].base;
     columnTwoContents = Pilots[j].role + " " + Pilots[j].shift;
     basePropertyForColor = Pilots[j].base;
     var row = getPilotRowNumber();
-    var column = returnColumnFromCurrentDayOfMonth();
 
     
     //assignColorSchemePerBase();

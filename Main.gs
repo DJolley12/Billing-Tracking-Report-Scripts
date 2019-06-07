@@ -1,6 +1,7 @@
 var Medics;
 var Assets;
 var Pilots;
+var OOSAssets;
 
 var statusBoardURL = "https://docs.google.com/spreadsheets/d/1aDhg2NZfEx791INTEpZQWoXQEc5tGQWl-oEBtG4vqiU/edit?pli=1#gid=1830506211";
 var statusBoardSheet = SpreadsheetApp.openByUrl(statusBoardURL).getSheetByName('Status Board');
@@ -16,6 +17,7 @@ function main() {
   //medic number needs to have format "MEDIC (number)" to write to template file
   changeMedicNumberFormat();
   Assets = returnAssetArray();
+  OOSAssets = returnOutOfServiceAircraftArray();
   Pilots = returnPilotArray();
   
   //the FileWriter class is sensitive to spelling for all categories used to match objects to the correct cell. 
@@ -25,6 +27,17 @@ function main() {
   writeMedicsToBillingFile();
   //find asset based on base and aircraft type  
   writeAssetsToBillingFile();
+  writeOOSAssetsToBillingFile();
   //find pilot based on type, shift and base
   writePilotsToBillingFile();
-} 
+}
+
+function testOOSArray() { 
+  Medics = returnMedicObjectArray();
+  changeMedicNumberFormat();
+  Assets = returnAssetArray();
+  Pilots = returnPilotArray();
+  OOSAssets = returnOutOfServiceAircraftArray();
+
+  writeOOSAssetsToBillingFile();
+}
